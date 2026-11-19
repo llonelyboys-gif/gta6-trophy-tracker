@@ -3,23 +3,128 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
+<title>Platinum Road — GTA 6 Trophy Guide &amp; Tracker</title>
+<meta name="description" content="An offline guide and tracker for all 55 PlayStation 5 trophies of Grand Theft Auto VI: checklist, roadmap to the platinum, missable flags and a cited guide for every trophy.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
+<header class="masthead">
+  <div class="masthead-title">
+    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; 55 trophies</p>
+    <h1>Platinum Road</h1>
+    <p class="subtitle">The offline GTA 6 trophy guide &amp; tracker — every official trophy, a roadmap to the platinum, and a guide to each one in our own words, with its sources.</p>
+  </div>
+  <div class="platinum-card" id="platinum-card" aria-label="Platinum progress">
+    <p class="platinum-count"><span id="earned-count">0</span><span class="of"> / 55</span></p>
+    <p class="platinum-label">trophies earned</p>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <p class="platinum-sub"><span id="grade-line">1 platinum &middot; 2 gold &middot; 6 silver &middot; 46 bronze</span></p>
+    <p class="platinum-sub">28 hidden on PlayStation until earned</p>
+  </div>
 </header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
+
+<nav class="tabs" aria-label="Guide sections">
+  <a href="#/list" data-tab="list" class="tab">Checklist</a>
+  <a href="#/roadmap" data-tab="roadmap" class="tab">Roadmap to Platinum</a>
+  <a href="#/missables" data-tab="missables" class="tab">Missables <span class="tab-badge" id="missable-count">10</span></a>
+  <a href="#/save" data-tab="save" class="tab">Save &amp; Export</a>
+</nav>
+
+<section class="toolbar" id="toolbar">
+  <label class="search-box">Search <input id="search" type="search" placeholder="Trophy name, mission, keyword…" autocomplete="off"></label>
+  <div class="chip-row" id="kind-chips" role="group" aria-label="Filter by kind"></div>
+  <div class="toolbar-row">
+    <label>Grade
+      <select id="grade-filter">
+        <option value="all">All grades</option>
+        <option value="platinum">Platinum</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+        <option value="bronze">Bronze</option>
+      </select>
+    </label>
+    <label>Show
+      <select id="earned-filter">
+        <option value="all">All trophies</option>
+        <option value="todo">Not earned yet</option>
+        <option value="earned">Earned only</option>
+      </select>
+    </label>
+    <label class="spoiler-toggle"><input id="spoiler-toggle" type="checkbox"> Hide story spoilers</label>
+    <span class="toolbar-note" id="list-count"></span>
+  </div>
+</section>
+
+<main class="layout">
+  <section class="list-pane" id="list-pane" aria-label="Trophy list">
+    <ol class="trophy-list" id="trophy-list"></ol>
+    <p class="empty-note" id="empty-note" hidden>No trophies match these filters. Clear the search or pick another kind.</p>
+  </section>
+
+  <aside class="detail-pane" id="detail-pane" aria-label="Trophy guide">
+    <div id="detail-empty">
+      <h2>Pick a trophy</h2>
+      <p>Select any trophy on the left to read its official description, its guide and its sources. Tick the box when you earn it — progress is saved in this browser.</p>
+      <p class="honest-note">Our guides are written from the official trophy descriptions and are honest about what has not been checked in the game yet: a specific place or step is only claimed where a source backs it. The game released on 19 November 2026; this guide is built from the official list as published before opening.</p>
+    </div>
+    <article id="detail-card" hidden>
+      <p class="detail-grade"><span class="medal" id="detail-medal"></span><span id="detail-grade-text"></span><span class="detail-kind" id="detail-kind"></span></p>
+      <h2 id="detail-name"></h2>
+      <p class="detail-desc"><span class="label">Official description</span><span id="detail-desc"></span></p>
+      <p class="detail-target" id="detail-target" hidden></p>
+      <p class="detail-missable" id="detail-missable" hidden>⚠ Missable — tied to a single story moment. See the Missables page before you play past it.</p>
+      <h3>How to earn it</h3>
+      <p id="detail-guide"></p>
+      <h3>Sources</h3>
+      <ul class="source-list" id="detail-sources"></ul>
+      <label class="detail-earned"><input id="detail-earned" type="checkbox"> I earned this trophy</label>
+      <p class="detail-note" id="detail-note"></p>
+    </article>
+  </aside>
+</main>
+
+<section class="page" id="roadmap-page" hidden>
+  <h2>Roadmap to the platinum</h2>
+  <p class="page-intro">Built from the official trophy descriptions alone: six stages in the order to play them. Story first, because the missable moments live there; the long grinds last, so they build up while you play.</p>
+  <div id="roadmap-stages"></div>
+  <p class="honest-note">This roadmap is built from the official descriptions, not from a completed playthrough — the game is a day old. Where a stage depends on something unconfirmed (mission replay, for example), the stage says so.</p>
+</section>
+
+<section class="page" id="missables-page" hidden>
+  <h2>Missable trophies — read this before you play</h2>
+  <p class="page-intro">Ten trophies are flagged missable: each one is tied to a single specific moment or event in its official description, the kind of thing that may not come back if you play past it. The flag is our reading of the official description, not a verified in-game fact — the game is a day old and mission replay is unconfirmed. The safe habit: keep a manual save before every story beat and before any one-off stunt, and check this page before starting a new chapter.</p>
+  <div id="missables-list"></div>
+</section>
+
+<section class="page" id="save-page" hidden>
+  <h2>Save &amp; export</h2>
+  <p class="page-intro">Your ticks are saved in this browser (localStorage) the moment you make them — no account, no network, nothing leaves your computer. Export a backup file before clearing browser data, and import it on another device to carry your progress over.</p>
+  <div class="save-grid">
+    <div class="save-box">
+      <h3>Export progress</h3>
+      <p>Downloads a small JSON file with every trophy you have ticked.</p>
+      <button id="export-btn" type="button">Download progress file</button>
+    </div>
+    <div class="save-box">
+      <h3>Import progress</h3>
+      <p>Load a progress file exported from this guide. Trophies ticked in the file are added to your current progress.</p>
+      <label class="import-label">Choose progress file <input id="import-file" type="file" accept="application/json,.json"></label>
+      <p class="import-status" id="import-status" role="status"></p>
+    </div>
+    <div class="save-box danger">
+      <h3>Reset progress</h3>
+      <p>Clears every tick in this browser. Export first if you want a backup.</p>
+      <button id="reset-btn" type="button">Reset all progress</button>
+    </div>
+  </div>
+  <h3>Your progress so far</h3>
+  <dl class="stats" id="save-stats"></dl>
+</section>
+
+<footer>
+  <p>Platinum Road — an unofficial, fan-made guide. Grand Theft Auto and GTA are trademarks of their owners; this guide uses no Rockstar logo or official artwork. Trophy names and descriptions are shown as PlayStation publishes them. Works fully offline: it makes no network request. <a href="https://www.exophase.com/game/grand-theft-auto-vi-psn/trophies/">Official list on Exophase</a> &middot; <a href="https://psnprofiles.com/trophies/43531-grand-theft-auto-vi">PSNProfiles</a></p>
+</footer>
+
 <script type="module" src="app.js"></script>
 </body>
 </html>
